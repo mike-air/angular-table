@@ -1,0 +1,63 @@
+<div *ngIf="showDrawer" class="fixed inset-0 bg-gray-600 bg-opacity-60 backdrop-blur-sm z-40" (click)="closeDrawer()"></div>
+
+<div *ngIf="showDrawer" class="fixed inset-y-0 right-0 w-1/3 bg-white shadow-lg z-50 overflow-y-auto flex flex-col justify-between">
+  <div>
+    <div class="px-6 py-4 border-b relative flex justify-between">
+      <h2 class="text-lg mx-12 font-medium">Payment Details</h2>
+      <button (click)="closeDrawer()" class="absolute top-4 left-4 text-gray-500 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <span class="sr-only">Close</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <div class="px-6 py-4 space-y-4">
+      <div *ngIf="transactionDetails">
+        <div class="flex justify-between">
+          <h3 class="text-sm font-medium text-gray-500">Transaction ID</h3>
+          <p class="text-lg font-semibold">{{ transactionDetails.transactionId }}</p>
+        </div>
+        <div class="flex justify-between">
+          <h3 class="text-sm font-medium text-gray-500">Student</h3>
+          <p class="text-lg font-semibold">{{ transactionDetails.student | titlecase }}</p>
+        </div>
+        <div class="flex justify-between">
+          <h3 class="text-sm font-medium text-gray-500">School</h3>
+          <p class="text-lg font-semibold">{{ transactionDetails.school | titlecase }}</p>
+        </div>
+        <div class="flex justify-between">
+          <h3 class="text-sm font-medium text-gray-500">Created by</h3>
+          <p class="text-lg font-semibold">{{ transactionDetails.createdBy | titlecase }}</p>
+        </div>
+        <div class="flex justify-between">
+          <h3 class="text-sm font-medium text-gray-500">Created at</h3>
+          <p class="text-lg font-semibold">{{ transactionDetails.createdAt | date:'medium' }}</p>
+        </div>
+        <div>
+          <h3 class="text-md font-bold text-gray-500">Invoice details</h3>
+          <div class="border-t mt-2 pt-2 space-y-4">
+            <div class="flex justify-between">
+              <h4 class="text-sm font-medium text-gray-500">Name</h4>
+              <p class="text-lg font-semibold">{{ transactionDetails.invoiceDetails.name | titlecase }}</p>
+            </div>
+            <div class="flex justify-between">
+              <h4 class="text-sm font-medium text-gray-500">Bill ID</h4>
+              <p class="text-lg font-semibold">{{ transactionDetails.invoiceDetails.billId }}</p>
+            </div>
+            <div class="flex justify-between">
+              <h4 class="text-sm font-medium text-gray-500">Total Amount</h4>
+              <p class="text-lg font-semibold">{{ transactionDetails.invoiceDetails.totalAmount | currency :'GHS' }}</p>
+            </div>
+            <div class="flex justify-between">
+              <h4 class="text-sm font-medium text-gray-500">Outstanding Amount</h4>
+              <p class="text-lg font-semibold">{{ transactionDetails.invoiceDetails.outstandingAmount | currency }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="px-6 py-4">
+    <button (click)="closeDrawer()" type="button" class="w-full rounded-full px-4 py-2 bg-gray-300 text-textColor hover:text-white hover:bg-blue-700 focus:outline-none focus:ring-2 border-blue-100 border-spacing-1 focus:ring-blue-500">Close</button>
+  </div>
+</div>

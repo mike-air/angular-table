@@ -1,0 +1,79 @@
+<div  class="bg-white border-r border-spacing-1 w-72 h-screen">
+  <div class="p-4 flex items-center justify-between relative">
+    <div
+      class="shadow-md px-4 py-3 w-full rounded-full bg-white flex items-center gap-4 cursor-pointer"
+      (click)="toggleDropdown()"
+    >
+      <div
+        class="bg-orange-400 h-12 w-12 flex items-center justify-center rounded-full text-white text-xl font-bold"
+      >
+        KH
+      </div>
+      <div>
+        <span class="block text-gray-800 font-semibold">Kevin Hagan</span>
+        <p class="text-sm text-gray-500">Administrator</p>
+      </div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="size-6 text-gray-500"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="m19.5 8.25-7.5 7.5-7.5-7.5"
+        />
+      </svg>
+    </div>
+
+    <!-- Dropdown menu -->
+    <div
+      *ngIf="isDropdownOpen"
+      class="absolute top-full mt-2 w-full bg-white shadow-md rounded-md overflow-hidden"
+    >
+      <a
+        *ngFor="let item of dropdownItems"
+        class="block px-4 py-2 text-gray-800 hover:bg-gray-200 cursor-pointer"
+        (click)="onDropdownItemClick(item)"
+      >
+        {{ item }}
+      </a>
+    </div>
+  </div>
+
+<nav class="mt-4">
+  <a
+    routerLink="/home"
+    routerLinkActive="active-link"
+    [routerLinkActiveOptions]="{ exact: true }"
+    class=" cursor-pointer py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-300 text-gray-600 flex items-center"
+  >
+    <img src="/assets/icons/dashboard.svg" alt="" class="mr-2 " />Dashboard
+  </a>
+  <a
+    routerLink="/transactions"
+    routerLinkActive="active-link"
+    class="block cursor-pointer py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-900 flex items-center mt-1"
+  >
+    <img src="/assets/icons/transaction.svg" alt="" class="mr-2" />Transactions
+  </a>
+  <a
+    routerLink="/vendors"
+    routerLinkActive="active-link"
+    class="block cursor-pointer py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-900 flex items-center mt-1"
+  >
+    <img src="/assets/icons/vendors.svg" alt="" class="mr-2" />Vendors
+  </a>
+  <a
+    routerLink="/activity"
+    routerLinkActive="active-link"
+    class="block cursor-pointer py-2.5 px-4 rounded transition duration-200 hover:bg-gray-200 hover:text-gray-900 flex items-center mt-1"
+  >
+    <img src="/assets/icons/activities.svg" alt="" class="mr-2" />Activity Log
+  </a>
+</nav>
+
+</div>

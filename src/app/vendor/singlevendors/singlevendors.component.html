@@ -1,0 +1,172 @@
+<div class="p-10">
+  <form [formGroup]="vendorForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <!-- Name Fields -->
+    <div class="flex space-x-4">
+      <div class="flex-1">
+        <input
+          type="text"
+          placeholder="First name"
+          formControlName="firstName"
+          class="w-full p-3 border border-gray-300 rounded"
+        />
+        <div *ngIf="f['firstName'].touched && f['firstName'].invalid" class="text-red-500 text-sm">
+          First name is required.
+        </div>
+      </div>
+      <div class="flex-1">
+        <input
+          type="text"
+          placeholder="Last name"
+          formControlName="lastName"
+          class="w-full p-3 border border-gray-300 rounded"
+        />
+        <div *ngIf="f['lastName'].touched && f['lastName'].invalid" class="text-red-500 text-sm">
+          Last name is required.
+        </div>
+      </div>
+    </div>
+    <input
+      type="text"
+      placeholder="Other names"
+      formControlName="otherNames"
+      class="w-full p-3 border border-gray-300 rounded"
+    />
+
+    <!-- Role -->
+    <select title="Role" formControlName="role" class="w-full p-3 border border-gray-300 rounded">
+      <option value="Administrator">Administrator</option>
+      <!-- Add more roles as needed -->
+    </select>
+
+    <!-- Phone Number -->
+    <div class="flex space-x-4 items-center">
+      <select title="Country Code" formControlName="countryCode" class="p-3 border border-gray-300 rounded">
+        <option value="233"> 🇬🇭 +233</option>
+        <!-- Add more country codes as needed -->
+      </select>
+      <div class="flex-1">
+        <input
+          type="tel"
+          placeholder="Phone number"
+          formControlName="phoneNumber"
+          class="w-full p-3 border border-gray-300 rounded"
+        />
+        <div *ngIf="f['phoneNumber'].touched && f['phoneNumber'].invalid" class="text-red-500 text-sm">
+          <div *ngIf="f['phoneNumber'].errors?.['required']">Phone number is required.</div>
+          <div *ngIf="f['phoneNumber'].errors?.['pattern']">Invalid phone number format.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settlement Account -->
+    <div class="p-4 border border-dashed border-blue-500 rounded-md bg-gray-50">
+      <label for="settlement-account" class="flex items-center space-x-3 cursor-pointer">
+        <input
+          type="checkbox"
+          id="settlement-account"
+          formControlName="usePhoneNumber"
+          class="sr-only peer"
+        />
+        <div class="w-10 h-6 bg-gray-300 rounded-full peer-checked:bg-green-500 relative">
+          <div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform transform peer-checked:translate-x-4"></div>
+        </div>
+        <span class="text-gray-600">Use phone number as settlement account</span>
+      </label>
+    </div>
+
+    <!-- Settlement Account Details -->
+    <div *ngIf="isPhoneNumberUsed()" class="mt-6">
+      <h2 class="text-lg font-semibold">Settlement Account details</h2>
+      <p class="text-gray-500">Add vendor's account to receive settlements.</p>
+      <div class="space-y-4 my-12">
+        <label for="account-type" class="block text-sm font-medium text-gray-700">Account type</label>
+        <select
+          formControlName="accountType"
+          class="w-full p-3 border border-gray-300 text-gray-700 rounded"
+          title="Account type"
+        >
+          <option disabled selected>Account type</option>
+          <option value="Bank">Bank</option>
+          <option value="Mobile Money">Mobile Money</option>
+          <!-- Add more account types as needed -->
+        </select>
+        <div *ngIf="f['accountType'].touched && f['accountType'].invalid" class="text-red-500 text-sm">
+          Account type is required.
+        </div>
+
+        <label for="bank" class="block text-sm font-medium text-gray-700">Select Bank</label>
+        <select
+          formControlName="bank"
+          class="w-full p-3 border border-gray-300 rounded"
+          title="Select Bank"
+        >
+          <option disabled selected>Select Bank</option>
+          <option value="Fidelity Bank">Fidelity Bank</option>
+          <option value="Ecobank">Ecobank</option>
+          <!-- Add more banks as needed -->
+        </select>
+        <div *ngIf="f['bank'].touched && f['bank'].invalid" class="text-red-500 text-sm">
+          Bank is required.
+        </div>
+
+        <label for="bankBranch" class="block text-sm font-medium text-gray-700">Bank branch</label>
+        <select
+          formControlName="bankBranch"
+          class="w-full p-3 border border-gray-300 rounded"
+          title="Select Bank Branch"
+        >
+          <option disabled selected>Bank branch</option>
+          <option value="East Legon">East Legon</option>
+          <option value="Airport Residential Area">Airport Residential Area</option>
+          <option value="Accra Central">Accra Central</option>
+          <!-- Add more branches as needed -->
+        </select>
+        <div *ngIf="f['bankBranch'].touched && f['bankBranch'].invalid" class="text-red-500 text-sm">
+          Bank branch is required.
+        </div>
+
+        <label for="bankAccountNumber" class="block text-sm font-medium text-gray-700">Bank Account Number</label>
+        <input
+          type="text"
+          placeholder="Bank Account Number"
+          formControlName="bankAccountNumber"
+          class="w-full p-3 border border-gray-300 rounded"
+        />
+        <div *ngIf="f['bankAccountNumber'].touched && f['bankAccountNumber'].invalid" class="text-red-500 text-sm">
+          <div *ngIf="f['bankAccountNumber'].errors?.['required']">Bank Account Number is required.</div>
+          <div *ngIf="f['bankAccountNumber'].errors?.['pattern']">Invalid Account Number format.</div>
+        </div>
+
+        <label for="nameOnAccount" class="block text-sm font-medium text-gray-700">Name on Account</label>
+        <input
+          type="text"
+          placeholder="Name on Account"
+          formControlName="nameOnAccount"
+          class="w-full p-3 border border-gray-300 rounded"
+        />
+        <div *ngIf="f['nameOnAccount'].touched && f['nameOnAccount'].invalid" class="text-red-500 text-sm">
+          Name on Account is required.
+        </div>
+      </div>
+    </div>
+
+    <!-- Add another vendor and submit button -->
+    <div class="rounded-sm sticky bottom-0 bg-gray-100 px-4 py-4 w-full flex justify-between items-center mt-4 shadow-lg">
+      <div class="flex justify-between space-x-2 w-full flex-wrap bg-gray-100 px-8 py-4 rounded-md">
+        <div>
+          <input type="checkbox" id="add-another-vendor" formControlName="addAnotherVendor" class="w-6 h-6 mx-2 align-middle text-primary ring-2 outline-none border-primary" />
+          <label for="add-another-vendor" class="text-gray-600 align-middle">Add another vendor</label>
+          <p class="text-gray-500 text-sm mt-1">
+            This will keep you on this page after successfully adding the current vendor.
+          </p>
+        </div>
+        <div class="self-end">
+          <button type="submit" class="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary transition-colors">
+            Add Vendor
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <app-snackbar></app-snackbar>
+</div>

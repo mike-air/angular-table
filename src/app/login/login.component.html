@@ -1,0 +1,45 @@
+<body class="bg-secondary min-h-screen w-screen flex items-center justify-center">
+  <div class="bg-white p-8 rounded-3xl shadow-custom w-full max-w-md">
+    <div class="flex flex-col justify-center mb-4">
+      <div class="flex justify-start mb-8">
+        <img src="/assets/icons/partner.svg" alt="SmartSapp logo" class="h-10 w-auto" />
+      </div>
+      <div class="flex flex-col mb-4">
+        <h1 class="text-2xl font-bold text-textColor">Partners Portal</h1>
+        <p>Welcome back! Please log in to your account to continue.</p>
+      </div>
+      <h1 class="text-2xl font-bold mb-4">Login</h1>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+          <input id="email" formControlName="email" type="email" class="mt-1 outline-blue-200 block w-full p-2 border border-gray-300 rounded-md" />
+          <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-red-500 text-sm mt-1">
+            <div *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</div>
+            <div *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email address.</div>
+          </div>
+        </div>
+        <div class="mb-4">
+          <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+          <input id="password" formControlName="password" type="password" class="mt-1 outline-blue-200 block w-full p-2 border border-gray-300 rounded-md" />
+          <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-red-500 text-sm mt-1">
+            <div *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</div>
+            <div *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long.</div>
+          </div>
+        </div>
+        <a href="/forgot-password" class="text-blue-500 hover:underline flex justify-end pb-2">Forgot Password?</a>
+        <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 flex justify-center items-center" [disabled]="isLoading">
+          <ng-container *ngIf="!isLoading; else loadingTemplate">Login</ng-container>
+          <ng-template #loadingTemplate>
+            <span class="flex items-center">
+              <svg class="w-6 h-6 mr-2 animate-spin" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2V6M12 18V22M4.93 4.93L7.76 7.76M16.24 16.24L19.07 19.07M2 12H6M18 12H22M4.93 19.07L7.76 16.24M16.24 7.76L19.07 4.93" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Loading...
+            </span>
+          </ng-template>
+        </button>
+      </form>
+      <app-snackbar></app-snackbar>
+    </div>
+  </div>
+</body>

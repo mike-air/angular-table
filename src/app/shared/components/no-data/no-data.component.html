@@ -1,0 +1,10 @@
+<div class="flex flex-col items-center justify-center h-screen">
+  <div class="text-center flex flex-col items-center justify-center">
+    <img [src]="iconUrl" alt="No Vendors Icon" class="mb-4 p-4 bg-blue-100 rounded-lg">
+    <p class="text-xl font-semibold mb-2">{{text}}</p>
+    <p class="text-gray-600 mb-6">{{subText}}</p>
+   <div *ngIf="buttonText">
+    <button class="bg-blue-500 text-white px-6 py-2 rounded-full" (click)="openModal()">{{buttonText}}</button>
+   </div>
+  </div>
+</div>

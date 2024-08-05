@@ -1,0 +1,28 @@
+<div class="flex h-screen">
+  <div class="flex-1 p-6">
+    <app-navbar (searchResults)="onSearchResults($event)"></app-navbar>
+    <div *ngIf="isLoading" class="flex justify-center items-center h-full">
+      <div class="animate-ping">
+        <img src="/assets/icons/logo.svg" alt="Loading" class="w-16 h-16">
+      </div>
+    </div>
+    <ng-container *ngIf="!isLoading">
+      <ng-container *ngIf="!isError; else errorTemplate">
+        <ng-container *ngIf="data.length > 0; else noDataTemplate">
+          <app-table [transactions]="data"></app-table>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+    <ng-template #noDataTemplate>
+      <app-no-data
+        text="No Payments Recorded"
+        subText="Start recording student fee payments."
+        buttonText="Record Payment"
+        iconUrl="/assets/icons/transaction.svg">
+      </app-no-data>
+    </ng-template>
+    <ng-template #errorTemplate>
+      <app-no-data [text]="errorMessage" subText="Please try again later." iconUrl="/assets/icons/transaction.svg"></app-no-data>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="flex items-center justify-between p-4 bg-white border-t border-gray-200">
+  <div class="flex items-center space-x-4">
+    <label for="itemsPerPage" class="mr-2">Rows per page:</label>
+    <select
+      id="itemsPerPage"
+      [(ngModel)]="config.itemsPerPage"
+      (change)="changeItemsPerPage()"
+      class="border border-gray-300 outline-blue-300 p-2 rounded-md"
+    >
+      <option *ngFor="let size of [10, 25, 50, 100]" [value]="size">
+        {{ size }}
+      </option>
+    </select>
+     <div class="text-gray-500">
+    Showing {{ startEntry }} to {{ endEntry }} of {{ totalItems }} entries
+  </div>
+  </div>
+
+  <div class="flex items-center space-x-1">
+    <ng-container *ngFor="let page of pages">
+       <a
+        *ngIf="page !== null"
+        [routerLink]="['/transactions']"
+        [queryParams]="{ page: page, limit: config.itemsPerPage}"
+        class="px-3 py-1 border cursor-pointer border-gray-300 rounded-md transition-colors duration-200 ease-in-out"
+        [class.bg-blue-500]="page === config.currentPage"
+        [class.text-white]="page === config.currentPage"
+        (click)="onPageChange(page)"
+      >
+        {{ page }}
+      </a>
+      <span *ngIf="page === null" class="px-3 py-1">...</span>
+    </ng-container>
+  </div>
+</div>

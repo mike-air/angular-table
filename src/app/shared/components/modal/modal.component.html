@@ -1,0 +1,211 @@
+<div
+  class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50"
+  *ngIf="isOpen"
+>
+  <div class="bg-white rounded-lg shadow-lg overflow-hidden w-1/3">
+    <div class="px-6 py-4">
+      <div class="flex justify-between items-center">
+        <h3 class="text-xl font-semibold">Record Payment</h3>
+        <button title="Close" class="text-gray-700" (click)="closeModal()">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z"
+              fill="#111827"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="px-6 py-4 border-t border-b border-gray-300">
+      <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">
+            Transaction ID from Fidelity Bank
+          </label>
+          <input
+            formControlName="transactionId"
+            type="text"
+            [ngClass]="{
+              'border-red-500': paymentForm.get('transactionId')?.invalid && paymentForm.get('transactionId')?.touched,
+              'border-gray-300': !(paymentForm.get('transactionId')?.invalid && paymentForm.get('transactionId')?.touched)
+            }"
+            class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            placeholder="Transaction ID from Fidelity Bank"
+          />
+          <div
+            *ngIf="
+              paymentForm.get('transactionId')?.invalid &&
+              paymentForm.get('transactionId')?.touched
+            "
+            class="text-red-500 text-xs italic"
+          >
+            Transaction ID is required.
+          </div>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">
+            Amount Paid
+          </label>
+          <div class="flex">
+            <input
+              formControlName="amountPaid"
+              type="number"
+              min="0"
+              [ngClass]="{
+                'border-red-500': paymentForm.get('amountPaid')?.invalid && paymentForm.get('amountPaid')?.touched,
+                'border-gray-300': !(paymentForm.get('amountPaid')?.invalid && paymentForm.get('amountPaid')?.touched)
+              }"
+              class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="0.00"
+            />
+            <span class="ml-2 self-center">GHS</span>
+          </div>
+          <div
+            *ngIf="
+              paymentForm.get('amountPaid')?.invalid &&
+              paymentForm.get('amountPaid')?.touched
+            "
+            class="text-red-500 text-xs italic"
+          >
+            Amount is required and must be a positive number.
+          </div>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">
+            Student's School
+          </label>
+          <select
+            title="Select school"
+            formControlName="school"
+            [ngClass]="{
+              'border-red-500': paymentForm.get('school')?.invalid && paymentForm.get('school')?.touched,
+              'border-gray-300': !(paymentForm.get('school')?.invalid && paymentForm.get('school')?.touched)
+            }"
+            class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          >
+            <option value="" disabled selected>Select school</option>
+            <option *ngFor="let school of schools" [value]="school">
+              {{ school }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              paymentForm.get('school')?.invalid &&
+              paymentForm.get('school')?.touched
+            "
+            class="text-red-500 text-xs italic"
+          >
+            School is required.
+          </div>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">
+            Student's Name
+          </label>
+          <select
+            title="Select student"
+            formControlName="student"
+            [ngClass]="{
+              'border-red-500': paymentForm.get('student')?.invalid && paymentForm.get('student')?.touched,
+              'border-gray-300': !(paymentForm.get('student')?.invalid && paymentForm.get('student')?.touched)
+            }"
+            class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          >
+            <option value="" disabled selected>Select student</option>
+            <option *ngFor="let student of students" [value]="student">
+              {{ student }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              paymentForm.get('student')?.invalid &&
+              paymentForm.get('student')?.touched
+            "
+            class="text-red-500 text-xs italic"
+          >
+            Student is required.
+          </div>
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">
+            Outstanding Invoices
+          </label>
+          <select
+            title="Select invoice"
+            formControlName="invoice"
+            [ngClass]="{
+              'border-red-500': paymentForm.get('invoice')?.invalid && paymentForm.get('invoice')?.touched,
+              'border-gray-300': !(paymentForm.get('invoice')?.invalid && paymentForm.get('invoice')?.touched)
+            }"
+            class="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          >
+            <option value="" disabled selected>Select invoice</option>
+            <option *ngFor="let invoice of invoices" [value]="invoice">
+              {{ invoice }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              paymentForm.get('invoice')?.invalid &&
+              paymentForm.get('invoice')?.touched
+            "
+            class="text-red-500 text-xs italic"
+          >
+            Invoice is required.
+          </div>
+        </div>
+        <div class="flex items-center text-gray-600 mb-4">
+          <span class="ml-2 mr-2 text-sm flex items-center space-x-2 justify-between">
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5.5 3.5H6.5V4.5H5.5V3.5ZM5.5 5.5H6.5V8.5H5.5V5.5ZM6 1C3.24 1 1 3.24 1 6C1 8.76 3.24 11 6 11C8.76 11 11 8.76 11 6C11 3.24 8.76 1 6 1ZM6 10C3.795 10 2 8.205 2 6C2 3.795 3.795 2 6 2C8.205 2 10 3.795 10 6C10 8.205 8.205 10 6 10Z"
+                fill="#6B7280"
+              />
+            </svg>
+            <p>Only unpaid and partly paid invoices will be listed</p>
+          </span>
+        </div>
+        <div class="flex justify-end">
+          <button
+            type="button"
+            class="bg-gray-200 text-gray-700 py-2 px-4 rounded-md mr-2"
+            (click)="closeModal()"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="py-2 px-4 rounded-md"
+            [ngStyle]="{
+              'background-color': isLoading ? '#F9FAFB' : '#0061E6',
+              color: isLoading ? '#718096' : '#ffffff'
+            }"
+            [disabled]="paymentForm.invalid || isLoading"
+          >
+            <span
+              *ngIf="isLoading"
+              class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            ></span>
+            {{ isLoading ? ' Recording Payment...' : 'Record Payment' }}
+          </button>
+        </div>
+      </form>
+    </div>
+    <app-snackbar></app-snackbar>
+  </div>
+</div>
