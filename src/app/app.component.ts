@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { LoginComponent } from './login/login.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './utils/interceptors/auth.interceptor';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { AuthService } from './utils/services/auth.service';
 import { CommonModule } from '@angular/common';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 @Component({
   selector: 'app-root',
@@ -18,13 +16,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
       multi: true,
     },
   ],
-  imports: [
-    RouterOutlet,
-    LoginComponent,
-    SidebarComponent,
-    CommonModule,
-    ForgotPasswordComponent,
-  ],
+  imports: [RouterOutlet, SidebarComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

@@ -2,13 +2,13 @@
   <div class="flex-1 p-6">
     <app-navbar (searchResults)="onSearchResults($event)"></app-navbar>
     <div *ngIf="isLoading" class="flex justify-center items-center h-full">
-      <div class="animate-ping">
+      <div class="animate-spin">
         <img src="/assets/icons/logo.svg" alt="Loading" class="w-16 h-16">
       </div>
     </div>
     <ng-container *ngIf="!isLoading">
       <ng-container *ngIf="!isError; else errorTemplate">
-        <ng-container *ngIf="data.length > 0; else noDataTemplate">
+        <ng-container *ngIf="data.length > 0; else noDataTemplate" class="p-8">
           <app-table [transactions]="data"></app-table>
         </ng-container>
       </ng-container>
